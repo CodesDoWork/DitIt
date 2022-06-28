@@ -10,13 +10,13 @@
             "options": {
                 "compiler": "babel",
                 "outputPath": "dist/apps/frontend",
-                "index": "apps/frontend/src/index.html",
+                "index": "apps/frontend/src/public/index.html",
                 "baseHref": "/",
                 "main": "apps/frontend/src/main.tsx",
                 "polyfills": "apps/frontend/src/polyfills.ts",
                 "tsConfig": "apps/frontend/tsconfig.app.json",
-                "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets"],
-                "styles": ["apps/frontend/src/styles.scss"],
+                "assets": ["apps/frontend/src/public/favicon.ico", "apps/frontend/src/assets"],
+                "styles": ["apps/frontend/src/sassStyles/main.scss"],
                 "scripts": [],
                 "webpackConfig": "@nrwl/react/plugins/webpack"
             },

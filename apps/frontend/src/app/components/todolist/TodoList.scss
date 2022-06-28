@@ -1,0 +1,30 @@
+@import "../../../sassStyles/_variables.scss";
+
+.aside-placeholder {
+    width: 20rem;
+    border-width: 0;
+    margin-left: 3rem;
+}
+
+.todo .btn {
+    box-shadow: none;
+    width: 100%;
+    padding: 5px;
+
+    &:focus {
+        box-shadow: none;
+    }
+
+    & img {
+        width: 20px;
+    }
+}
+
+.done input {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.todo-name {
+    flex-grow: 1;
+}

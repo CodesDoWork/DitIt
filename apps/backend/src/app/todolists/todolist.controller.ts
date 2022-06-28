@@ -14,7 +14,8 @@ export class TodoListsController {
 
     @Post()
     @ApiBody({ type: CreateTodoListDto })
-    async create(@Request() req: AuthorizedRequest<CreateTodoListDto>) {
+    @ApiResponse({ type: TodoListDto })
+    async create(@Request() req: AuthorizedRequest<CreateTodoListDto>): Promise<TodoListDto> {
         return this.todoListService.create({ ...req.body, user: req.user });
     }
 

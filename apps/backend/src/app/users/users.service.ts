@@ -1,30 +1,27 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "./user.entity";
 import { CreateUserDto, PatchUserDto } from "@todo-app/types";
-import { CryptoService } from "../crypto/crypto.service";
 import { CommonService } from "../common/common.service";
+import { hash } from "bcrypt";
 
 @Injectable()
 export class UsersService extends CommonService<User, CreateUserDto, PatchUserDto> {
-    constructor(private readonly crypto: CryptoService) {
-        super(User);
+    constructor() {
+        super(User, "user");
     }
 
-    findOneByUsername = (username: string) => User.findOneBy({ username });
+    findOneByUsernameEmail = async (usernameOrEmail: string) =>
+        (await User.findOneBy({ username: usernameOrEmail })) ||
+        User.findOneBy({ email: usernameOrEmail });
 
-    processCreationDto = async ({ password, ...data }: CreateUserDto) => ({
+    processCreationDto = async (data: CreateUserDto) => ({
         ...data,
-        password: await this.crypto.hash(password),
         forename: null,
         surname: null,
-        todoLists: [],
     });
 
-    processPatchDto = async ({ password, ...data }: PatchUserDto) =>
-        password
-            ? {
-                  ...data,
-                  password: password ? await this.crypto.hash(password) : password,
-              }
-            : data;
+    processPatchDto = async ({ password, ...data }: PatchUserDto) => ({
+        ...data,
+        password: password ? await hash(password, 10) : undefined,
+    });
 }

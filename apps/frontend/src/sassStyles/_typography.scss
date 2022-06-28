@@ -1,0 +1,15 @@
+@import "./_variables.scss";
+
+h1 {
+    color: var(--primary);
+    margin-bottom: $xl-margin;
+}
+
+h2 {
+    color: var(--secondary);
+    margin-bottom: $large-margin;
+}
+
+h3 {
+    color: var(--tertiary);
+}

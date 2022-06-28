@@ -1,0 +1,26 @@
+@import "../../../sassStyles/_variables.scss";
+
+.header-container {
+    padding: $large-margin $xxl-margin;
+}
+
+header {
+    & hr {
+        margin: 0;
+    }
+
+    & img {
+        width: 10rem;
+    }
+}
+
+.subtitle {
+    color: var(---tertiary);
+    letter-spacing: 0.15vw;
+    padding-left: 0.1em;
+}
+
+
+.icon {
+    width: 16px;
+}

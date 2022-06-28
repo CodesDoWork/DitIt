@@ -1,0 +1,16 @@
+.labelled-text {
+    & .form-control {
+        &[readonly] {
+            background-color: white;
+            border-width: 0;
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    & .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        transform: translateX(0.15rem) translateY(-0.75rem) scale(0.85);
+    }
+}

@@ -1,7 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ObjectID } from "typeorm";
-import { Priority } from "./types";
-import { TodoListDto } from "./todolist.dto";
+import { Priority } from "./enums";
 import {
     IsDateString,
     IsEnum,
@@ -14,7 +13,7 @@ import {
 
 export class TodoDto {
     @ApiProperty({ type: "string" })
-    id: ObjectID;
+    _id: ObjectID | string;
 
     @ApiProperty()
     name: string;
@@ -31,8 +30,11 @@ export class TodoDto {
     @ApiProperty({ nullable: true })
     manualSortIndex: number | null;
 
-    @ApiProperty({ type: () => TodoListDto })
-    list: TodoListDto;
+    @ApiProperty()
+    done: boolean;
+
+    @ApiProperty({ type: "string" })
+    listId: ObjectID | string;
 }
 
 export class CreateTodoDto {
@@ -58,7 +60,7 @@ export class CreateTodoDto {
 
     @ApiProperty()
     @IsMongoId()
-    list: string;
+    listId: string;
 }
 
 export class PatchTodoDto {
@@ -87,9 +89,4 @@ export class PatchTodoDto {
     @IsOptional()
     @IsInt()
     manualSortIndex?: number | null;
-
-    @ApiProperty({ required: false })
-    @IsOptional()
-    @IsMongoId()
-    list?: string;
 }

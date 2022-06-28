@@ -1,0 +1,36 @@
+@import "./_variables.scss";
+
+main {
+    width: 60%;
+    margin: $large-margin auto 0 auto;
+    padding-bottom: $footer-height + $large-margin;
+}
+
+hr {
+    margin: $large-margin 0;
+}
+
+a, .nav-link {
+    color: var(--primary);
+}
+
+.btn-primary {
+    color: white;
+    text-decoration: none;
+
+    &:focus {
+        color: white;
+    }
+}
+
+.btn:hover {
+    color: white;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+body p {
+    font-size: 1.1rem;
+}

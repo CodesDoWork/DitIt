@@ -1,0 +1,10 @@
+@import "../../../sassStyles/_variables.scss";
+
+.toast-header img {
+    width: 32px;
+}
+
+.toast-container {
+    margin: 0 0 ($footer-height + $normal-margin) $normal-margin;
+    z-index: 999;
+}

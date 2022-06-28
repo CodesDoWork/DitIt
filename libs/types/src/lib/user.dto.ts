@@ -5,7 +5,7 @@ import { TodoListDto } from "./todolist.dto";
 
 export class UserDto {
     @ApiProperty({ type: "string" })
-    id: ObjectID;
+    _id: ObjectID | string;
 
     @ApiProperty()
     username: string;

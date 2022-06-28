@@ -1,0 +1,19 @@
+aside {
+    width: 20rem;
+    margin-right: 3rem;
+    border: 1px solid var(--bs-gray-400);
+    border-top-width: 0;
+    height: 100%;
+
+    & img {
+        width: 24px;
+    }
+
+    & h3 {
+        padding: 1rem;
+    }
+}
+
+.list-name {
+    font-size: 1.2em;
+}

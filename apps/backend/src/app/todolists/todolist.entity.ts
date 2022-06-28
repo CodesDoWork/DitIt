@@ -1,43 +1,25 @@
-import {
-    AfterInsert,
-    AfterLoad,
-    AfterUpdate,
-    BaseEntity,
-    Column,
-    Entity,
-    ManyToOne,
-    ObjectID,
-    ObjectIdColumn,
-    OneToMany,
-} from "typeorm";
-import { SortMode, TodoListDto, UserDto } from "@todo-app/types";
-import { User } from "../users/user.entity";
+import { AfterInsert, AfterLoad, AfterUpdate, Column, Entity, ObjectID } from "typeorm";
+import { SortMode, TodoListDto } from "@todo-app/types";
 import { Todo } from "../todos/todo.entity";
-import { ApiProperty } from "@nestjs/swagger";
+import { CommonEntity } from "../common/common.entity";
 
 @Entity()
-export class TodoList extends BaseEntity implements TodoListDto {
-    @ObjectIdColumn()
-    id: ObjectID;
-
+export class TodoList extends CommonEntity implements TodoListDto {
     @Column()
     name: string;
 
     @Column()
     sortMode: SortMode;
 
-    @ManyToOne(() => User, user => user.todoLists)
-    user: User;
+    @Column()
+    userId: ObjectID;
 
-    @OneToMany(() => Todo, todo => todo.list, { cascade: true })
     todos: Todo[];
 
     @AfterLoad()
     @AfterInsert()
     @AfterUpdate()
-    nullChecks() {
-        if (!this.todos) {
-            this.todos = [];
-        }
+    async loadRelations() {
+        this.todos = await Todo.findBy({ listId: this._id });
     }
 }

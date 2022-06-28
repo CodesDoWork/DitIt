@@ -1,13 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ObjectID } from "typeorm";
-import { SortMode } from "./types";
-import { UserDto } from "./user.dto";
+import { SortMode } from "./enums";
 import { TodoDto } from "./todo.dto";
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class TodoListDto {
     @ApiProperty({ type: "string" })
-    id: ObjectID;
+    _id: ObjectID | string;
 
     @ApiProperty()
     name: string;
@@ -15,8 +14,8 @@ export class TodoListDto {
     @ApiProperty({ enum: SortMode })
     sortMode: SortMode;
 
-    @ApiProperty({ type: () => UserDto })
-    user: UserDto;
+    @ApiProperty({ type: "string" })
+    userId: ObjectID | string;
 
     @ApiProperty({ type: () => TodoDto, isArray: true })
     todos: TodoDto[];

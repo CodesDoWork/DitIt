@@ -1,22 +1,11 @@
-import {
-    AfterInsert,
-    AfterLoad,
-    AfterUpdate,
-    BaseEntity,
-    Column,
-    Entity,
-    ObjectID,
-    ObjectIdColumn,
-    OneToMany,
-} from "typeorm";
+import { AfterInsert, AfterLoad, AfterUpdate, BeforeInsert, Column, Entity } from "typeorm";
 import { TodoList } from "../todolists/todolist.entity";
 import { UserDto } from "@todo-app/types";
+import { CommonEntity } from "../common/common.entity";
+import { hash } from "bcrypt";
 
 @Entity()
-export class User extends BaseEntity implements UserDto {
-    @ObjectIdColumn()
-    id: ObjectID;
-
+export class User extends CommonEntity implements UserDto {
     @Column({ unique: true })
     username: string;
 
@@ -32,16 +21,18 @@ export class User extends BaseEntity implements UserDto {
     @Column({ unique: true })
     email: string;
 
-    @OneToMany(() => TodoList, list => list.user, { cascade: true })
     todoLists: TodoList[];
+
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await hash(this.password, 10);
+    }
 
     @AfterLoad()
     @AfterInsert()
     @AfterUpdate()
-    nullChecks() {
-        if (!this.todoLists) {
-            this.todoLists = [];
-        }
+    async loadRelations() {
+        this.todoLists = await TodoList.findBy({ userId: this._id });
     }
 
     export = (): UserDto => ({

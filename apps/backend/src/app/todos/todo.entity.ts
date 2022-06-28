@@ -1,12 +1,9 @@
-import { BaseEntity, Column, Entity, ManyToOne, ObjectID, ObjectIdColumn } from "typeorm";
-import { TodoList } from "../todolists/todolist.entity";
+import { Column, Entity, ObjectID } from "typeorm";
 import { Priority, TodoDto } from "@todo-app/types";
+import { CommonEntity } from "../common/common.entity";
 
 @Entity()
-export class Todo extends BaseEntity implements TodoDto {
-    @ObjectIdColumn()
-    id: ObjectID;
-
+export class Todo extends CommonEntity implements TodoDto {
     @Column()
     name: string;
 
@@ -22,6 +19,9 @@ export class Todo extends BaseEntity implements TodoDto {
     @Column()
     manualSortIndex: number | null;
 
-    @ManyToOne(() => TodoList, list => list.todos)
-    list: TodoList;
+    @Column()
+    done: boolean;
+
+    @Column()
+    listId: ObjectID;
 }

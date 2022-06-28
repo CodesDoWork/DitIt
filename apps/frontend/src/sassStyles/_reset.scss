@@ -1,0 +1,28 @@
+*,
+:after,
+:before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: anek_latin, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    text-rendering: optimizeSpeed;
+    overflow-x: hidden;
+    margin: 0 auto;
+
+    position: relative;
+    min-height: 100vh;
+}
+
+ul {
+    list-style-type: none;
+}

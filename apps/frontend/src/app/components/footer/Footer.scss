@@ -1,0 +1,13 @@
+@import "../../../sassStyles/variables";
+
+.footer, footer {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    height: $footer-height;
+    background-color: var(--tertiary);
+    color: white;
+}

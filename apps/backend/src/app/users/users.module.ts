@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { CryptoModule } from "../crypto/crypto.module";
 import { UsersController } from "./users.controller";
 
 @Module({
-    imports: [CryptoModule],
+    imports: [],
     providers: [UsersService],
     controllers: [UsersController],
     exports: [UsersService],

@@ -14,7 +14,8 @@ export class TodoController {
 
     @Post()
     @ApiBody({ type: CreateTodoDto })
-    async create(@Request() req: AuthorizedRequest<CreateTodoDto>) {
+    @ApiResponse({ type: TodoDto })
+    async create(@Request() req: AuthorizedRequest<CreateTodoDto>): Promise<TodoDto | void> {
         return this.todoService.create(req.body);
     }
 
@@ -32,5 +33,11 @@ export class TodoController {
     @ApiResponse({ type: TodoDto })
     delete(@Param("id") id: string, @Request() req: AuthorizedRequest): Promise<TodoDto> {
         return this.todoService.findOne(id).then(list => list.remove());
+    }
+
+    @Patch(":id/done")
+    @ApiResponse({ type: TodoDto })
+    async toggleDone(@Param("id") id: string, @Request() req: AuthorizedRequest): Promise<TodoDto> {
+        return this.todoService.toggleDone(id);
     }
 }

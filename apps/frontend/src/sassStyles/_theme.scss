@@ -1,0 +1,10 @@
+:root {
+    --primary: #069bdf;
+    --secondary: #0f84d1;
+    --tertiary: #186dbe;
+    --accent: #02a9da;
+}
+
+$primary: #069bdf;
+
+@import '~bootstrap/scss/bootstrap.scss';
