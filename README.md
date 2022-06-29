@@ -20,6 +20,8 @@
    to the url where the backend will be hosted. (default is already set)
 2. `npm run docker:build` -> docker container
 3. In case you want to run it locally, use `npm run docker:run`
+4. By default, the api will be available at [localhost:3333](http://localhost:3333)
+   and the frontend at [localhost](http://localhost)
 
 ### Customization
 
