@@ -10,14 +10,24 @@
         "importHelpers": true,
         "target": "es2015",
         "module": "esnext",
-        "lib": ["es2017", "dom"],
+        "lib": [
+            "es2017",
+            "dom"
+        ],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@todo-app/types": ["libs/types/src/index.ts"],
-            "@todo-app/types-enums": ["libs/types/src/lib/enums.ts"]
+            "@todo-app/types": [
+                "libs/types/src/index.ts"
+            ],
+            "@todo-app/types-enums": [
+                "libs/types/src/lib/enums.ts"
+            ]
         }
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": [
+        "node_modules",
+        "tmp"
+    ]
 }

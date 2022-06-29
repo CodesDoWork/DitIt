@@ -1,7 +1,7 @@
 import React from "react";
-import { Header } from "../components/header/Header";
+import { Header } from "./header/Header";
 import { appName } from "../constants";
-import { Footer } from "../components/footer/Footer";
+import { Footer } from "./footer/Footer";
 import { ErrorToast } from "./error_toast/ErrorToast";
 import { useParams } from "react-router";
 

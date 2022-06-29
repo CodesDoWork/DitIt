@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { ValidationPipe, Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app/app.module";
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from "@nestjs/swagger";
@@ -36,4 +36,4 @@ async function bootstrap() {
     Logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 
-bootstrap();
+bootstrap().then();

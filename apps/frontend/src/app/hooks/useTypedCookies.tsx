@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie";
 import { CookieSetOptions } from "universal-cookie";
 
-type TypedCookies = {
+export type TypedCookies = {
     session?: string;
 };
 

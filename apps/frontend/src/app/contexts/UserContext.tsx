@@ -1,11 +1,9 @@
-import { createContext, PropsWithChildren, useContext } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect } from "react";
 import { UserDto } from "@todo-app/types";
 import { Api } from "../api/Api";
 import { createCtx } from "./createContext";
 import { Cookies, useTypedCookies } from "../hooks/useTypedCookies";
-import { ErrorContext, ErrorMsg } from "./ErrorContext";
-
-const loginError = "LoginError";
+import { ErrorContext } from "./ErrorContext";
 
 export const [PrivateUserContext, PrivateUserProvider] = createCtx<UserDto | null>(null);
 
@@ -20,27 +18,27 @@ export const UserProvider = ({ children }: PropsWithChildren) => (
 const UserContextProvider = ({ children }: PropsWithChildren) => {
     const [cookies, , removeCookie] = useTypedCookies();
     const { state: user, update: setUser } = useContext(PrivateUserContext);
-    const { state: errMsg, update: setErrMsg } = useContext(ErrorContext);
+    const { update: setErrMsg } = useContext(ErrorContext);
 
-    if (cookies.session && !user && errMsg?.type !== loginError) {
-        Api.authorize(cookies.session, res => {
-            switch (res) {
-                case null:
-                    removeCookie(Cookies.Session);
-                    break;
-                case undefined:
-                    setErrMsg(
-                        new ErrorMsg("Something went wrong! Please try again later.", loginError)
-                    );
-                    break;
-                default:
-                    setUser(res);
-            }
-        });
-    } else if (!cookies.session) {
-        user && setUser(null);
-        Api.logout();
-    }
+    useEffect(() => {
+        if (cookies.session && !user) {
+            Api.authorize(cookies.session, res => {
+                switch (res) {
+                    case null:
+                        removeCookie(Cookies.Session);
+                        break;
+                    case undefined:
+                        setErrMsg("Something went wrong! Please try again later.");
+                        break;
+                    default:
+                        setUser(res);
+                }
+            });
+        } else if (!cookies.session) {
+            user && setUser(null);
+            Api.logout();
+        }
+    }, [user, cookies, removeCookie, setUser, setErrMsg]);
 
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };

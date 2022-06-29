@@ -1,5 +1,5 @@
-import { ValidatedFormInputProps } from "./ValidatedForm";
 import { Priority } from "@todo-app/types-enums";
+import { ValidatedFormInputProps } from "./ValidatedFormInput";
 
 export const makeInput = (
     label: string,

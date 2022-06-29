@@ -6,13 +6,13 @@ import { ErrorContext } from "../../contexts/ErrorContext";
 import { ToastProps } from "react-bootstrap/Toast";
 
 export const ErrorToast = (props: ToastProps) => {
-    const { state: err, update: setMsg } = useContext(ErrorContext);
+    const { state: err, update: setErr } = useContext(ErrorContext);
 
     return (
         <ToastContainer position={"bottom-start"}>
             <Toast
-                onClose={() => setMsg(undefined)}
-                show={!closed && !!err}
+                onClose={() => setErr(undefined)}
+                show={!!err}
                 animation={true}
                 bg={"danger"}
                 {...props}>
@@ -20,7 +20,7 @@ export const ErrorToast = (props: ToastProps) => {
                     <img src={ErrorIcon} className="me-2" alt="" />
                     <strong className="me-auto">Error</strong>
                 </Toast.Header>
-                <Toast.Body className={"text-white"}>{err?.msg}</Toast.Body>
+                <Toast.Body className={"text-white"}>{err}</Toast.Body>
             </Toast>
         </ToastContainer>
     );

@@ -1,12 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Accordion, Button, Card, Form, Stack, useAccordionButton } from "react-bootstrap";
-import { ErrorContext, ErrorMsg } from "../../contexts/ErrorContext";
 import { Api } from "../../api/Api";
 import { Draggable } from "react-beautiful-dnd";
 import EditIcon from "../../../assets/imgs/pencil.svg";
-import DeleteIcon from "../../../assets/imgs/trash.svg";
 import ExpandLessIcon from "../../../assets/imgs/expand_less.svg";
 import ExpandMoreIcon from "../../../assets/imgs/expand_more.svg";
+import DeleteIcon from "../../../assets/imgs/trash.svg";
 import { PatchTodoDto, TodoDto, TodoListDto } from "@todo-app/types";
 import {
     deadlineInput,
@@ -14,10 +13,12 @@ import {
     nameInput,
     priorityInput,
 } from "../validated_form/form-inputs";
-import { FormModal } from "../form_modal/FormModal";
 import { LabelledText } from "../laballed_text/LabelledText";
 import { Priority } from "@todo-app/types-enums";
-import { SubmitModal } from "../submit_modal/SubmitModal";
+import "./Todo.scss";
+import { useCatchWithMsg } from "../../hooks/useCatchWithMsg";
+import { ConfirmButton } from "../confirm_button/ConfirmButton";
+import { FormButton } from "../form_button/FormButton";
 
 type TodoProps = {
     list: TodoListDto;
@@ -31,26 +32,11 @@ export const Todo = ({ todo, idx, onChange, list, onDelete }: TodoProps) => {
     const id = todo._id.toString();
     const [isExpanded, setExpanded] = useState(false);
     const toggleExpansion = useAccordionButton(id, () => setExpanded(!isExpanded));
-    const { update: updateError } = useContext(ErrorContext);
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const catchWithMsg = useCatchWithMsg();
 
-    const toggleDone = () =>
-        Api.toggleDone(todo)
-            .then(newTodo => onChange(newTodo))
-            .catch(err => updateError(new ErrorMsg(err.message)));
-
-    const editTodo = (data: PatchTodoDto) =>
-        Api.patchTodo(todo._id, data, list)
-            .then(onChange)
-            .then(() => setShowEditModal(false))
-            .catch(err => updateError(new ErrorMsg(err.message)));
-
-    const deleteTodo = () =>
-        Api.deleteTodo(todo._id, list)
-            .then(() => onDelete(todo))
-            .then(() => setShowDeleteModal(false))
-            .catch(err => updateError(new ErrorMsg(err.message)));
+    const toggleDone = () => catchWithMsg(Api.toggleDone(todo).then(newTodo => onChange(newTodo)));
+    const editTodo = (data: PatchTodoDto) => Api.patchTodo(todo._id, data, list).then(onChange);
+    const deleteTodo = () => Api.deleteTodo(todo._id, list).then(() => onDelete(todo));
 
     return (
         <Draggable draggableId={id} index={idx}>
@@ -65,17 +51,41 @@ export const Todo = ({ todo, idx, onChange, list, onDelete }: TodoProps) => {
                             <Form.Check
                                 checked={todo.done}
                                 onChange={toggleDone}
-                                className={"done" + " me-2"}
+                                className={"done me-2"}
                                 type={"checkbox"}
                             />
                             <span className={"todo-name"}>{todo.name}</span>
                             <Stack direction={"horizontal"} gap={3}>
-                                <Button variant={"link"} onClick={() => setShowEditModal(true)}>
+                                <FormButton
+                                    variant={"link"}
+                                    submitText={"Edit"}
+                                    inputs={[
+                                        nameInput,
+                                        descriptionInput,
+                                        priorityInput,
+                                        deadlineInput,
+                                    ]}
+                                    onSubmit={editTodo}
+                                    title={"Edit Todo"}
+                                    msg={"Specify the details for your Todo:"}
+                                    prefilledData={
+                                        {
+                                            name: todo.name,
+                                            description: todo.description,
+                                            priority: todo.priority || 0,
+                                            deadline: todo.deadline?.toString(),
+                                        } as Record<string, string | number | null>
+                                    }>
                                     <img src={EditIcon} alt={""} />
-                                </Button>
-                                <Button variant={"link"} onClick={() => setShowDeleteModal(true)}>
+                                </FormButton>
+                                <ConfirmButton
+                                    variant={"link"}
+                                    modalVariant={"danger"}
+                                    onConfirm={deleteTodo}
+                                    title={"Delete Todo"}
+                                    msg={"Do you really want to delete this todo?"}>
                                     <img src={DeleteIcon} alt={""} />
-                                </Button>
+                                </ConfirmButton>
                                 <Button variant={"link"} onClick={toggleExpansion}>
                                     <img
                                         src={isExpanded ? ExpandLessIcon : ExpandMoreIcon}
@@ -101,29 +111,6 @@ export const Todo = ({ todo, idx, onChange, list, onDelete }: TodoProps) => {
                             </div>
                         </Accordion.Collapse>
                     </Card>
-                    <FormModal
-                        submitText={"Edit"}
-                        inputs={[nameInput, descriptionInput, priorityInput, deadlineInput]}
-                        onSubmit={editTodo}
-                        show={showEditModal}
-                        onHide={() => setShowEditModal(false)}
-                        title={"Edit Todo"}
-                        prefilledData={
-                            {
-                                name: todo.name,
-                                description: todo.description,
-                                priority: todo.priority || 0,
-                                deadline: todo.deadline?.toString(),
-                            } as Record<string, string | number | null>
-                        }
-                        msg={"Specify the details for your Todo:"}
-                    />
-                    <SubmitModal
-                        show={showDeleteModal}
-                        onHide={() => setShowDeleteModal(false)}
-                        msg={"Do you really want to delete this Todo?"}
-                        onSubmit={deleteTodo}
-                    />
                 </div>
             )}
         </Draggable>

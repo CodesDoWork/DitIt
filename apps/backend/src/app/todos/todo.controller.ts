@@ -31,13 +31,13 @@ export class TodoController {
 
     @Delete(":id")
     @ApiResponse({ type: TodoDto })
-    delete(@Param("id") id: string, @Request() req: AuthorizedRequest): Promise<TodoDto> {
+    delete(@Param("id") id: string): Promise<TodoDto> {
         return this.todoService.findOne(id).then(list => list.remove());
     }
 
     @Patch(":id/done")
     @ApiResponse({ type: TodoDto })
-    async toggleDone(@Param("id") id: string, @Request() req: AuthorizedRequest): Promise<TodoDto> {
+    async toggleDone(@Param("id") id: string): Promise<TodoDto> {
         return this.todoService.toggleDone(id);
     }
 }

@@ -1,9 +1,8 @@
-import { Body, Controller, Post, Request, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Request, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { CreateUserDto, LoginRequest, LoginResponse } from "@todo-app/types";
 import { ApiBody, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Response } from "express";
 import { AuthorizedRequest } from "./types";
 
 @Controller("auth")
@@ -14,7 +13,7 @@ export class AuthController {
     @Post("register")
     @ApiResponse({ status: 201 })
     register(@Body() info: CreateUserDto): Promise<void> {
-        return this.authService.register(info).then(() => {});
+        return this.authService.register(info).then();
     }
 
     @UseGuards(LocalAuthGuard)

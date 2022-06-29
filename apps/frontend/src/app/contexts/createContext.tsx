@@ -9,7 +9,7 @@ export function createCtx<A>(defaultValue: A) {
         update: defaultUpdate,
     });
 
-    function Provider(props: PropsWithChildren<{}>) {
+    function Provider(props: PropsWithChildren<Record<string, unknown>>) {
         const [state, update] = useState(defaultValue);
         return <ctx.Provider value={{ state, update }} {...props} />;
     }

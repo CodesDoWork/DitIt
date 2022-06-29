@@ -1,16 +1,17 @@
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { TodoListSidebar } from "../todolist_sidebar/TodoListSidebar";
-import "./Dashboard.scss";
 
 export const Dashboard = () => {
-    const user = useContext(UserContext);
+    // can't be null because of routing in app.tsx
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const user = useContext(UserContext)!; //NOSONAR
 
     return (
         <div className={"d-flex"}>
-            <TodoListSidebar />
+            <TodoListSidebar user={user} />
             <main>
-                <h1>Hello {user?.forename || `@${user?.username}`}</h1>
+                <h1>Hello {user.forename || `@${user.username}`}</h1>
                 <p>This is your personal dashboard.</p>
             </main>
             <aside className={"aside-placeholder"} />

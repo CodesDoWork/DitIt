@@ -1,14 +1,7 @@
 @import "../../../sassStyles/_variables.scss";
 
-.aside-placeholder {
-    width: 20rem;
-    border-width: 0;
-    margin-left: 3rem;
-}
-
 .todo .btn {
     box-shadow: none;
-    width: 100%;
     padding: 5px;
 
     &:focus {

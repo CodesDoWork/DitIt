@@ -12,8 +12,12 @@ aside {
     & h3 {
         padding: 1rem;
     }
-}
 
-.list-name {
-    font-size: 1.2em;
+    & button {
+        font-size: 1.2em;
+    }
+
+    & .btn-link:hover {
+        color: black;
+    }
 }

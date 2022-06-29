@@ -82,10 +82,14 @@ export namespace Api {
 
     // todolist
 
-    export const createList = (user: UserDto, list: CreateTodoListDto) =>
+    export const createList = (user: UserDto, list: CreateTodoListDto): Promise<TodoListDto> =>
         axiosInstance
             .post<TodoListDto>("/todolists", list)
-            .then(res => user.todoLists.push(res.data))
+            .then(res => res.data)
+            .then(res => {
+                user.todoLists.push(res);
+                return res;
+            })
             .catch(mapError);
 
     export const patchList = (

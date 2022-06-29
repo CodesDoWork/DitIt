@@ -15,8 +15,8 @@ export const StartPage = () => {
             <h1>Welcome to DidIt</h1>
             <p>Here you can find some interesting facts about todo-lists:</p>
             <Carousel variant={"dark"}>
-                {facts.map(fact => (
-                    <Carousel.Item className={"p-5"}>
+                {facts.map((fact, idx) => (
+                    <Carousel.Item className={"p-5"} key={idx}>
                         <h3 className={"w-100 text-center"}>{fact}</h3>
                     </Carousel.Item>
                 ))}

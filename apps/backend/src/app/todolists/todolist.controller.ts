@@ -31,7 +31,7 @@ export class TodoListsController {
 
     @Delete(":id")
     @ApiResponse({ type: TodoListDto })
-    delete(@Param("id") id: string, @Request() req: AuthorizedRequest): Promise<TodoListDto> {
+    delete(@Param("id") id: string): Promise<TodoListDto> {
         return this.todoListService.findOne(id).then(list => list.remove());
     }
 }

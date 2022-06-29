@@ -17,14 +17,20 @@ export class TodoService extends CommonService<Todo, CreateTodoDto, PatchTodoDto
         priority,
         deadline,
         ...data
-    }: CreateTodoDto) => ({
-        ...data,
-        description: description || null,
-        priority: priority || null,
-        deadline: deadline || null,
-        done: false,
-        listId: new ObjectID(listId),
-    });
+    }: CreateTodoDto) => {
+        const _id = new ObjectID(listId);
+        const list = await TodoList.findOneBy({ _id });
+
+        return {
+            ...data,
+            description: description || null,
+            priority: priority || null,
+            deadline: deadline || null,
+            done: false,
+            manualSortIndex: list.todos.length,
+            listId: _id,
+        };
+    };
 
     postCreate = async (item: Todo) => {
         await TodoList.findOneBy({ _id: item.listId }).then(list => {

@@ -1,18 +1,12 @@
-@import "../../../sassStyles/_variables.scss";
-
 .validated-form {
     min-width: 20rem;
     width: 40%;
 
-    & .btn {
+    & .input-group {
+        margin-bottom: 1rem;
+    }
+
+    & .form-floating {
         width: 100%;
     }
-}
-
-.input-group {
-    margin-bottom: $normal-margin;
-}
-
-.form-floating {
-    width: 100%;
 }

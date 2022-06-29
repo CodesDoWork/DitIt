@@ -20,7 +20,9 @@ export abstract class CommonService<T extends CommonEntity, C extends object, P 
     };
 
     create = async (info: C): Promise<T> =>
-        (this.entity.create(await this.processCreationDto(info)).save() as Promise<T>)
+        this.entity
+            .create(await this.processCreationDto(info))
+            .save()
             .then(this.postCreate)
             .catch(err => {
                 Logger.error(err);
@@ -28,12 +30,13 @@ export abstract class CommonService<T extends CommonEntity, C extends object, P 
             });
 
     patch = async (id: T | ObjectID | string, patch: P): Promise<T> =>
-        (await this.entity
+        this.entity
             .merge(await this.getEntity(id), await this.processPatchDto(patch))
-            .save()) as T;
+            .save()
+            .then();
 
     getEntity = async (id: T | ObjectID | string): Promise<T> =>
-        (id as T).save !== undefined ? (id as T) : this.findOne(id as string | ObjectID);
+        (id as T).save !== undefined ? (id as T) : this.findOne(id);
 
     processCreationDto = async (data: C): Promise<object> => data;
 

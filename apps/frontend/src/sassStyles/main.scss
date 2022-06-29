@@ -1,8 +1,7 @@
 @use "~bootstrap/scss/bootstrap";
-@use "./fonts";
-@use "./reset";
-@use "./variables";
 @use "./theme";
+@use "./variables";
 @use "./typography";
-@use "./animations";
+@use "./fonts";
 @use "./general";
+@use "./reset";

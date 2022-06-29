@@ -5,6 +5,6 @@
 }
 
 .toast-container {
-    margin: 0 0 ($footer-height + $normal-margin) $normal-margin;
+    margin: 0 0 ($footer-height + 1rem) 1rem;
     z-index: 999;
 }

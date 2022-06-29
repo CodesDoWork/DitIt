@@ -1,7 +1,6 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { Alert, Button, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./ErrorPage.scss";
+import { Link, useNavigate } from "react-router-dom";
 import { appName } from "../../constants";
 
 type ErrorPageProps = {
@@ -9,20 +8,27 @@ type ErrorPageProps = {
 };
 
 export const ErrorPage = ({ status }: ErrorPageProps) => {
+    const navigate = useNavigate();
     const reason = getReasonPhrase(status);
     document.title = `${reason} - ${appName}`;
+
     return (
         <main>
             <Alert variant={"danger"}>
                 <Alert.Heading className={"mb-4 text-center"}>
                     {status} - {reason}
                 </Alert.Heading>
-                <Stack gap={3}>
-                    <Button variant={"outline-danger"} onClick={() => history.back()}>
+                <Stack gap={3} className={"align-items-center"}>
+                    <Button
+                        className={"w-50"}
+                        variant={"outline-danger"}
+                        onClick={() => navigate(-1)}>
                         Back to last page
                     </Button>
-                    <Link to="/">
-                        <Button variant={"outline-danger"}>To home page</Button>
+                    <Link className={"w-50"} to="/">
+                        <Button className={"w-100"} variant={"outline-danger"}>
+                            To home page
+                        </Button>
                     </Link>
                 </Stack>
             </Alert>

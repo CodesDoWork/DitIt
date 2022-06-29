@@ -26,3 +26,20 @@ body {
 ul {
     list-style-type: none;
 }
+
+a, .nav-link {
+    color: var(--primary);
+}
+
+.btn-primary {
+    color: white;
+    text-decoration: none;
+
+    &:focus {
+        color: white;
+    }
+}
+
+.btn:hover {
+    color: white;
+}
