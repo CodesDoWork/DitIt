@@ -25,6 +25,7 @@
 
 #### Local
 - set the backend port with environment variable `PORT`
+- don't forget to change the baseUrl in [environments](./apps/frontend/src/environments)
 
 #### Docker
 You can simply change the port mapping of the `docker:run` script.
@@ -40,7 +41,7 @@ This repository contains two apps (backend & frontend) and a shared-library (typ
 
 NestJS is used for the backend and React for the frontend.
 A Swagger documentation of the API endpoints and data-types can be found at
-`{baseUrl}:{port}/api` (default: `localhost:3333/api`).
+`{baseUrl}:{port}/api` (default: [localhost:3333/api](http://localhost:3333/api)).
 
 ## Usage (Frontend)
  
