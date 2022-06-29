@@ -19,11 +19,11 @@ import { useCatchWithMsg } from "../../hooks/useCatchWithMsg";
 import { sortedTodos } from "./sort";
 import { FormButton } from "../form_button/FormButton";
 
-type TodoListPageProps = {
+type TodoListProps = {
     list: TodoListDto;
 };
 
-export const TodoListPage = ({ list }: TodoListPageProps) => {
+export const TodoList = ({ list }: TodoListProps) => {
     // can't be null because of routing in app.tsx
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useContext(UserContext)!; //NOSONAR
@@ -55,7 +55,7 @@ export const TodoListPage = ({ list }: TodoListPageProps) => {
             return;
         }
 
-        const newTodos = Array.from(todos);
+        const newTodos = sortedTodos(todos, sortMode);
         newTodos.splice(source.index, 1);
         newTodos.splice(destination.index, 0, draggedTodo);
         newTodos.forEach((todo, idx) => {
@@ -63,8 +63,8 @@ export const TodoListPage = ({ list }: TodoListPageProps) => {
             catchWithMsg(Api.patchTodo(todo._id, { manualSortIndex: idx }));
         });
 
-        setSortMode(SortMode.Manual);
         setTodos(newTodos);
+        setSortMode(SortMode.Manual);
     };
 
     const createTodo = async (data: Omit<CreateTodoDto, "listId">) =>

@@ -1,14 +1,21 @@
 {
     "name": "todo-app",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "license": "MIT",
+    "author": "Justin Konratt",
     "scripts": {
-        "start": "nx run-many --all --target=serve --parallel",
-        "start:backend": "nx run backend:serve",
-        "start:frontend": "nx run frontend:serve",
-        "build": "nx build",
+        "start": "npm run start:backend && npm run start:frontend",
+        "start:backend": "node dist/apps/backend/main.js",
+        "start:frontend": "npx serve -s dist/apps/frontend",
+        "dev": "nx run-many --all --target=serve --parallel",
+        "dev:backend": "nx run backend:serve",
+        "dev:frontend": "nx run frontend:serve",
+        "build:dev": "nx build backend && nx build frontend",
+        "build:prod": "nx build backend --prod && nx build frontend --prod",
         "test": "nx run-many --all --target=test --parallel",
-        "lint": "nx workspace-lint && nx run-many --all --target=lint --parallel"
+        "lint": "nx workspace-lint && nx run-many --all --target=lint --parallel",
+        "docker:build": "docker build . -t todo_app",
+        "docker:run": "docker run -p 80:80 -p 3333:3333 --name todo_app -v todo_app:/data/db -d todo_app"
     },
     "private": true,
     "devDependencies": {
@@ -82,6 +89,7 @@
         "reflect-metadata": "^0.1.13",
         "regenerator-runtime": "0.13.7",
         "rxjs": "^7.0.0",
+        "serve": "^13.0.2",
         "swagger-ui-express": "^4.4.0",
         "tslib": "^2.3.0",
         "typeorm": "^0.3.6",

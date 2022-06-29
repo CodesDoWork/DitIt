@@ -13,6 +13,7 @@ import {
 } from "@todo-app/types";
 import axios, { AxiosError } from "axios";
 import { ObjectID } from "typeorm";
+import { environment } from "../../environments/environment";
 
 type ErrorData = {
     statusCode: number;
@@ -35,7 +36,7 @@ const mapError = (err: AxiosError<ErrorData>) => {
 };
 
 export namespace Api {
-    const axiosInstance = axios.create({ baseURL: "/api" });
+    const axiosInstance = axios.create({ baseURL: `${environment.baseUrl}/api` });
 
     // auth
 

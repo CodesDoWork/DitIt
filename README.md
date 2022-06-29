@@ -1,96 +1,49 @@
 # TodoApp
 
-This project was generated using [Nx](https://nx.dev).
+---
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## Start the application
 
-🔎 **Smart, Fast and Extensible Build System**
+### Local dev
+1. `npm i`
+2. `npm run dev`
 
-## Adding capabilities to your workspace
+### Local production
+1. `npm i`
+2. Change to baseUrl in [environment.prod.ts](./apps/frontend/src/environments/environment.prod.ts)
+   to the url where the backend will be hosted. (default is already set)
+3. `npm run build:prod`
+4. `npm start`
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+### From docker
+1. Change to baseUrl in [environment.prod.ts](./apps/frontend/src/environments/environment.prod.ts)
+   to the url where the backend will be hosted. (default is already set)
+2. `npm run docker:build` -> docker container
+3. In case you want to run it locally, use `npm run docker:run`
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects
-as well.
+### Customization
 
-Below are our core plugins:
+#### Local
+- set the backend port with environment variable `PORT`
 
-- [React](https://reactjs.org)
-    - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-    - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-    - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-    - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-    - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-    - `npm install --save-dev @nrwl/node`
+#### Docker
+You can simply change the port mapping of the `docker:run` script.
+If you want to change the ports inside the container, use the following steps:
+- Set the backend port of the production stage with `ENV PORT {port_here}` inside the Dockerfile
+- Set the frontend port within the [start.sh](./start.sh) file with `-l {port_here}`
+  Don't forget to `EXPOSE` this port in production stage of the Dockerfile
+  and update in inside the `docker:run` command.
+- build a new container
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+## Architecture
+This repository contains two apps (backend & frontend) and a shared-library (types).
 
-## Generate an application
+NestJS is used for the backend and React for the frontend.
+A Swagger documentation of the API endpoints and data-types can be found at
+`{baseUrl}:{port}/api` (default: `localhost:3333/api`).
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@todo-app/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you
-change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use
-the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that
-are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s
-advanced code generation and project dependency graph, plus a unified experience for both frontend and backend
-developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+## Usage (Frontend)
+ 
+### TodoList Page
+On a todolist-page you can double-click the name (headline) and edit it.
+Todo items drag-n-droppable. 

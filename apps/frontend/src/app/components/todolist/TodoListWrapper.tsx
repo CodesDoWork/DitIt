@@ -3,7 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router";
 import { ErrorPage } from "../error_page/ErrorPage";
 import { StatusCodes } from "http-status-codes";
-import { TodoListPage } from "./TodoListPage";
+import { TodoList } from "./TodoList";
 
 export const TodoListWrapper = () => {
     // can't be null because of routing in app.tsx
@@ -12,5 +12,5 @@ export const TodoListWrapper = () => {
     const { name: paramListName } = useParams();
     const list = user.todoLists.find(todolist => todolist.name === paramListName);
 
-    return list ? <TodoListPage list={list} /> : <ErrorPage status={StatusCodes.NOT_FOUND} />;
+    return list ? <TodoList list={list} /> : <ErrorPage status={StatusCodes.NOT_FOUND} />;
 };
