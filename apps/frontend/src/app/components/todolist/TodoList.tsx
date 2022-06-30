@@ -42,6 +42,7 @@ export const TodoList = ({ list }: TodoListProps) => {
     const deleteList = () =>
         catchWithMsg(Api.deleteList(list._id, user).then(() => navigate("/dashboard")));
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => patchList({ sortMode }), [sortMode]);
     useEffect(() => {
         setTodos(list.todos);
