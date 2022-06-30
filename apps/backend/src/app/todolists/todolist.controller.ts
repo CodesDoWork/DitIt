@@ -1,4 +1,4 @@
-import { Controller, Delete, Param, Patch, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Param, Patch, Post, Request, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CreateTodoListDto, PatchTodoListDto, TodoListDto } from "@todo-app/types";
 import { AuthorizedRequest } from "../auth/types";
@@ -15,18 +15,18 @@ export class TodoListsController {
     @Post()
     @ApiBody({ type: CreateTodoListDto })
     @ApiResponse({ type: TodoListDto })
-    async create(@Request() req: AuthorizedRequest<CreateTodoListDto>): Promise<TodoListDto> {
-        return this.todoListService.create({ ...req.body, user: req.user });
+    async create(
+        @Body() list: CreateTodoListDto,
+        @Request() req: AuthorizedRequest<CreateTodoListDto>
+    ): Promise<TodoListDto> {
+        return this.todoListService.create({ ...list, user: req.user });
     }
 
     @Patch(":id")
     @ApiBody({ type: PatchTodoListDto })
     @ApiResponse({ type: TodoListDto })
-    async patch(
-        @Param("id") id: string,
-        @Request() req: AuthorizedRequest<PatchTodoListDto>
-    ): Promise<TodoListDto> {
-        return this.todoListService.patch(id, req.body);
+    async patch(@Param("id") id: string, @Body() patch: PatchTodoListDto): Promise<TodoListDto> {
+        return this.todoListService.patch(id, patch);
     }
 
     @Delete(":id")

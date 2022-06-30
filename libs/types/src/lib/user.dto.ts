@@ -1,7 +1,8 @@
 import { ObjectID } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
+import { IsEmail, IsOptional, IsString, ValidateIf } from "class-validator";
 import { TodoListDto } from "./todolist.dto";
+import { IsNotBlank } from "./validation";
 
 export class UserDto {
     @ApiProperty({ type: "string" })
@@ -31,12 +32,12 @@ export class LoginResponse {
 export class LoginRequest {
     @ApiProperty()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     username: string;
 
     @ApiProperty()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     password: string;
 }
 
@@ -50,13 +51,13 @@ export class PatchUserDto {
     @ApiProperty({ required: false })
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     username?: string;
 
     @ApiProperty({ required: false })
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     password?: string;
 
     @ApiProperty({ nullable: true, required: false })

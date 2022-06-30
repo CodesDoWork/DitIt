@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ObjectID } from "typeorm";
 import { SortMode } from "./enums";
 import { TodoDto } from "./todo.dto";
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsOptional, IsString } from "class-validator";
+import { IsNotBlank } from "./validation";
 
 export class TodoListDto {
     @ApiProperty({ type: "string" })
@@ -24,7 +25,7 @@ export class TodoListDto {
 export class CreateTodoListDto {
     @ApiProperty()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     name: string;
 }
 
@@ -32,7 +33,7 @@ export class PatchTodoListDto {
     @ApiProperty({ required: false })
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     name?: string;
 
     @ApiProperty({ enum: SortMode, required: false })

@@ -41,9 +41,13 @@ If you want to change the ports inside the container, use the following steps:
 ## Architecture
 This repository contains two apps (backend & frontend) and a shared-library (types).
 
-NestJS is used for the backend and React for the frontend.
+NestJS is used for the backend and React for the frontend. The database is a mongodb. 
 A Swagger documentation of the API endpoints and data-types can be found at
 `{baseUrl}:{port}/api` (default: [localhost:3333/api](http://localhost:3333/api)).
+
+Within the docker container, the apps are located at `/app/backend` and `/app/frontend`.
+A mongodb instance is running inside the container and puts its data inside `/data/db`.
+A volume _todo_app_ is provided for it using the `docker:run` script.
 
 ## Usage (Frontend)
  

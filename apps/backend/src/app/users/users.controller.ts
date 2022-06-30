@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Request, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { PatchUserDto, UserDto } from "@todo-app/types";
 import { AuthorizedRequest } from "../auth/types";
@@ -21,8 +21,11 @@ export class UsersController {
     @Patch("me")
     @ApiBody({ type: PatchUserDto })
     @ApiResponse({ type: UserDto })
-    async patch(@Request() req: AuthorizedRequest<PatchUserDto>): Promise<UserDto> {
-        return this.usersService.patch(req.user, req.body).then(user => user.export());
+    async patch(
+        @Body() patch: PatchUserDto,
+        @Request() req: AuthorizedRequest<PatchUserDto>
+    ): Promise<UserDto> {
+        return this.usersService.patch(req.user, patch).then(user => user.export());
     }
 
     @Delete("me")

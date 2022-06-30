@@ -1,15 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ObjectID } from "typeorm";
 import { Priority } from "./enums";
-import {
-    IsDateString,
-    IsEnum,
-    IsInt,
-    IsMongoId,
-    IsNotEmpty,
-    IsOptional,
-    IsString,
-} from "class-validator";
+import { IsDateString, IsEnum, IsInt, IsMongoId, IsOptional, IsString } from "class-validator";
+import { IsNotBlank } from "./validation";
 
 export class TodoDto {
     @ApiProperty({ type: "string" })
@@ -40,7 +33,7 @@ export class TodoDto {
 export class CreateTodoDto {
     @ApiProperty()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     name: string;
 
     @ApiProperty({ nullable: true, required: false })
@@ -67,7 +60,7 @@ export class PatchTodoDto {
     @ApiProperty({ required: false })
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
+    @IsNotBlank()
     name?: string;
 
     @ApiProperty({ nullable: true, required: false })
