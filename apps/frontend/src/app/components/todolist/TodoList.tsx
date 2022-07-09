@@ -48,6 +48,7 @@ export const TodoList = ({ list }: TodoListProps) => {
         setTodos(list.todos);
         setSortMode(list.sortMode);
     }, [list]);
+    useEffect(() => setTodos(list.todos), [list.todos]);
 
     const onDragEnd = (result: DropResult) => {
         const { destination, source, draggableId } = result;
@@ -74,10 +75,10 @@ export const TodoList = ({ list }: TodoListProps) => {
         );
     const onTodoChange = (todo: TodoDto) => {
         const newTodos = Array.from(todos);
-        newTodos[todos.findIndex(item => item === todo)] = todo;
+        newTodos[todos.findIndex(item => item._id === todo._id)] = todo;
         setTodos(newTodos);
     };
-    const onTodoDelete = (todo: TodoDto) => setTodos(todos.filter(item => item !== todo));
+    const onTodoDelete = (todo: TodoDto) => setTodos(todos.filter(item => item._id !== todo._id));
 
     const toggleNameEditMode = () => {
         if (isEditingName) {
