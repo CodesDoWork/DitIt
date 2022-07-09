@@ -70,8 +70,8 @@ export const TodoList = ({ list }: TodoListProps) => {
     };
 
     const createTodo = async (data: Omit<CreateTodoDto, "listId">) =>
-        Api.createTodo(list, { ...data, listId: list._id.toString() }).then(() =>
-            setTodos([...todos])
+        Api.createTodo(list, { ...data, listId: list._id.toString() }).then(todo =>
+            setTodos(Array.from(new Set([...todos, todo])))
         );
     const onTodoChange = (todo: TodoDto) => {
         const newTodos = Array.from(todos);
