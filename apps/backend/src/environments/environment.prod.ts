@@ -18,7 +18,7 @@ export const environment = {
         port: 27017,
         database: "todo_app",
         logging: true,
-        synchronize: false,
+        synchronize: true,
         entities: [User, TodoList, Todo],
         useUnifiedTopology: true,
     }),
