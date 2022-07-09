@@ -15,7 +15,9 @@ type TodoListSidebarProps = {
 export const TodoListSidebar = ({ user }: TodoListSidebarProps) => {
     const [lists, setLists] = useState(user.todoLists);
     const createList = async (list: TodoListDto) =>
-        Api.createList(user, list).then(() => setLists([...lists]));
+        Api.createList(user, list).then(newList =>
+            setLists(Array.from(new Set([...lists, newList])))
+        );
 
     return (
         <aside>
