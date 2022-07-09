@@ -34,7 +34,7 @@ export const Todo = ({ todo, idx, onChange, list, onDelete }: TodoProps) => {
     const toggleExpansion = useAccordionButton(id, () => setExpanded(!isExpanded));
     const catchWithMsg = useCatchWithMsg();
 
-    const toggleDone = () => catchWithMsg(Api.toggleDone(todo).then(onChange));
+    const toggleDone = () => catchWithMsg(Api.toggleDone(todo, list).then(onChange));
     const editTodo = (data: PatchTodoDto) => Api.patchTodo(todo._id, data, list).then(onChange);
     const deleteTodo = () => Api.deleteTodo(todo._id, list).then(() => onDelete(todo));
 

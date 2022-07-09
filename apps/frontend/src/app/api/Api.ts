@@ -142,11 +142,11 @@ export namespace Api {
             .then(() => (list.todos = list.todos.filter(todo => todo._id !== todoId)))
             .catch(mapError);
 
-    export const toggleDone = (todo: TodoDto): Promise<TodoDto> =>
+    export const toggleDone = (todo: TodoDto, list: TodoListDto): Promise<TodoDto> =>
         axiosInstance
             .patch<TodoDto>(`todos/${todo._id}/done`)
             .then(res => {
-                todo.done = !todo.done;
+                list.todos[list.todos.findIndex(item => item._id === todo._id)] = res.data;
                 return res.data;
             })
             .catch(mapError);
